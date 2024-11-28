@@ -1,7 +1,7 @@
-Scaling [--solutionname--] With Kubernetes
+Scaling [cybersecuritywithprivategpt-28fb] With Kubernetes
 ===========================
 
-Generated On: --datetime-- UTC
+Generated On: 2024-11-28 18:18:56 UTC
 
 You can scale your solution with Kubernetes.  To do so, will will need to apply the following YAML files to your Kubernetes cluster.
 
@@ -13,13 +13,13 @@ You can scale your solution with Kubernetes.  To do so, will will need to apply 
 .. important:: 
    Below assumes you have a Kubernetes cluster and **kubectl** installed in your Linux environment.
 
-Based on your TML solution [--solutionname--] - if you want to scale your application with Kubernetes - you will need to apply the following YAML files.
+Based on your TML solution [cybersecuritywithprivategpt-28fb] - if you want to scale your application with Kubernetes - you will need to apply the following YAML files.
 
 .. list-table::
 
    * - **YML File**
      - **Description**
-   * - :ref:`--solutionnamefile--`
+   * - :ref:`cybersecuritywithprivategpt-28fb.yml`
      - This is your main solution YAML file.  
  
        It MUST be applied to your Kubernetes cluster.
@@ -52,20 +52,127 @@ kubectl apply command
 
 .. code-block:: YAML
 
-   --kubectl--
+   kubectl apply -f mysql-storage.yml -f mysql-db-deployment.yml -f qdrant.yml -f privategpt.yml -f cybersecuritywithprivategpt-28fb.yml
 
---solutionnamefile--
+cybersecuritywithprivategpt-28fb.yml
 ------------------------
 
 .. important::
-   Copy and Paste this YAML file: --solutionnamefile-- - and save it locally.
+   Copy and Paste this YAML file: cybersecuritywithprivategpt-28fb.yml - and save it locally.
 
    Also, MAKE SURE to update any tokens and passwords in this file.
 
 .. code-block:: YAML
 
-   ################# --solutionnamefile--
-   --solutionnamecode--
+   ################# cybersecuritywithprivategpt-28fb.yml
+   
+     apiVersion: apps/v1
+     kind: Deployment
+     metadata:
+       name: cybersecuritywithprivategpt-28fb
+     spec:
+       selector:
+         matchLabels:
+           app: cybersecuritywithprivategpt-28fb
+       replicas: 3 # tells deployment to run 1 pods matching the template
+       template:
+         metadata:
+           labels:
+             app: cybersecuritywithprivategpt-28fb
+         spec:
+           containers:
+           - name: cybersecuritywithprivategpt-28fb
+             image: carterd132@gmail.com/cybersecuritywithprivategpt-28fb-amd64
+             volumeMounts:
+             - name: dockerpath
+               mountPath: /var/run/docker.sock
+             ports:
+             - containerPort: 8883
+             - containerPort: 53035
+             - containerPort: 37959
+             - containerPort: 47501
+             env:
+             - name: TSS
+               value: '0'
+             - name: SOLUTIONNAME
+               value: 'cybersecuritywithprivategpt-28fb'
+             - name: SOLUTIONDAG
+               value: 'solution_preprocessing_ai_mqtt_dag-cybersecuritywithprivategpt-28fb'
+             - name: GITUSERNAME
+               value: 'carterd132'
+             - name: GITREPOURL
+               value: 'https://github.com/carterd132/raspberrypi'
+             - name: SOLUTIONEXTERNALPORT
+               value: '47501'
+             - name: CHIP
+               value: 'amd64'
+             - name: SOLUTIONAIRFLOWPORT
+               value: '53035'
+             - name: SOLUTIONVIPERVIZPORT
+               value: '37959'
+             - name: DOCKERUSERNAME
+               value: 'carterd132@gmail.com'
+             - name: CLIENTPORT
+               value: '8883'
+             - name: EXTERNALPORT
+               value: '35005'
+             - name: KAFKACLOUDUSERNAME
+               value: ''
+             - name: VIPERVIZPORT
+               value: '9005'
+             - name: MQTTUSERNAME
+               value: 'yedgy'
+             - name: AIRFLOWPORT
+               value: '9000'
+             - name: GITPASSWORD
+               value: '<ENTER GITHUB PASSWORD>'
+             - name: KAFKACLOUDPASSWORD
+               value: '<Enter API secret>'
+             - name: MQTTPASSWORD
+               value: '<ENTER MQTT PASSWORD>'
+             - name: READTHEDOCS
+               value: '<ENTER READTHEDOCS TOKEN>'
+             - name: qip 
+               value: 'localhost' # This is private GPT IP              
+             - name: KUBE
+               value: '1'
+           volumes: 
+           - name: dockerpath
+             hostPath:
+               path: /var/run/docker.sock
+           dnsPolicy: "None"
+           dnsConfig:
+             nameservers:
+               - 8.8.8.8                
+               
+   ---
+     apiVersion: v1
+     kind: Service
+     metadata:
+       name: cybersecuritywithprivategpt-28fb-service
+       labels:
+         app: cybersecuritywithprivategpt-28fb-service
+     spec:
+       type: NodePort #Exposes the service as a node ports
+       ports:
+       - port: 8883
+         name: p1
+         protocol: TCP
+         targetPort: 8883
+       - port: 53035
+         name: p2
+         protocol: TCP
+         targetPort: 53035
+       - port: 37959
+         name: p3
+         protocol: TCP
+         targetPort: 37959
+       - port: 47501
+         name: p4
+         protocol: TCP
+         targetPort: 47501
+       selector:
+         app: cybersecuritywithprivategpt-28fb
 
 mysql-storage.yml
 ------------------------
